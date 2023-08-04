@@ -23,3 +23,19 @@ def index(request):
         fm=Form_Login()
         return render(request,'dashboardadmin/index.html',{'forms':fm})
         
+'''
+def savepassword(request):
+    ph=PasswordHasher()
+    password=ph.hash('raju@123')
+    #save the password
+    username='raju'
+    save_admin=Admin(username=username,password=password)
+    save_admin.save()
+    return HttpResponseRedirect('/')
+'''
+def savepassword(request):
+    username='raju'
+    password='raju@123'
+    save_admin=Admin(username=username,password=password)
+    save_admin.save()
+    return HttpResponseRedirect('/')
