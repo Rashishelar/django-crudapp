@@ -1,0 +1,15 @@
+{%extends 'dashboardadmin/base.html'%}
+{%block content%}
+    <div class="container">
+        <div class="row ">
+            <div class="col-6">
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    {{forms.as_p}}
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </form>
+                
+            </div>
+        </div>
+    </div>
+{%endblock content%}

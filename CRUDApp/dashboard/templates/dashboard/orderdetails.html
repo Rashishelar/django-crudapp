@@ -1,0 +1,66 @@
+{%extends 'dashboard/base.html'%}
+{%block content%}
+    <div class="container">
+        <br>
+        <div class="row ">
+            <div class="col-12">
+                {%if messages%}
+                <h4>Error Message</h4>
+                {%for message in messages%}
+                {{message}}
+                {%endfor%}
+                {%endif%}
+            </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div class="col-6">
+                <h5>Order Details</h5>
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    {{forms.as_p}}
+                    <input type="submit" value="save" class="btn btn-primary">
+                </form>
+            </div>
+            <div class="col-6 ">
+                <br>
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Seach the data ....." style="width: 100%;">
+                <br>
+                <table class="table" id="myTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Order Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%if display_orderdetails%}
+                        {%for display_orderdetail in display_orderdetails%}
+                        <tr>
+                            <td>
+                                <p>
+                                    <h6>Order Number:</h6>{{display_orderdetail.orderNumber}}<br>
+                                    Product Code:     {{display_orderdetail.productCode}}<br>
+                                    Quantity Ordered:     {{display_orderdetail.quantityOrdered}}<br>
+                                    Price Each:     {{display_orderdetail.priceEach}}<br>
+                                    Order Line Number:     {{display_orderdetail.orderLineNumber}}<br>
+                                    <a href="{%url 'update_orderdetails' display_orderdetail.id%}" class="btn btn-secondary">Update</a>
+                                    <a href="{%url 'delete_orderdetails' display_orderdetail.id%}" class="btn btn-danger">Delete</a>
+                                </p>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                     {%else%}
+                        <tr>
+                            <td>
+                                <p>
+                                    No record to display
+                                </p>
+                            </td>
+                        </tr>
+                      {%endif%}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+{%endblock content%}

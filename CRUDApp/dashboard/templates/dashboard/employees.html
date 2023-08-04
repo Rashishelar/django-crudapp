@@ -1,0 +1,73 @@
+{%extends 'dashboard/base.html'%}
+{%block content%}
+    <div class="container">
+      <br>
+      <div class="row ">
+        <div class="col-12">
+           {%if messages%}
+              <h4>Error Message</h4>
+                  {%for message in messages%}
+                  {{message}}
+              {%endfor%}
+           {%endif%}
+        </div>
+      </div>
+      <br>
+        <div class="row ">
+            <div class="col-6">
+                <h5>Employees</h5>
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    {{forms.as_p}}
+                    <input type="submit" value="save" class="btn btn-primary">
+                </form>
+            </div>
+            <div class="col-6">
+              <br>
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Seach the data ....." style="width: 100%;">
+                <br>
+                <table class="table" id="myTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Employees Details</th>
+                        <th scope="col">Employees Office Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%if display_employees%}
+                        {%for display_employee in display_employees%}
+                      <tr>
+                        <td>
+                            <p>
+                                <h6>Employee Number:    {{display_employee.employeeNumber}}</h6>
+                                {{display_employee.firstName}} {{display_employee.lastName}}<br>
+                                {{display_employee.jobTitle}}<br>
+                                {{display_employee.extension}}<br>
+                                {{display_employee.email}}<br>
+                                <a href="{%url 'update_employees' display_employee.employeeNumber%}" class="btn btn-secondary">Update</a>
+                                <a href="{%url 'delete_employees' display_employee.employeeNumber%}" class="btn btn-danger">Delete</a>
+                            </p>
+                            
+                        </td>
+                        <td>
+                           <p>
+                            <h6>Office Code:</h6>{{display_employee.officeCode}}
+                            <h6>Reports To:</h6>{{display_employee.reportsTo.firstName}} {{display_employee.reportsTo.lastName}} {{display_employee.reportsTo}}
+                           </p>
+
+                        </td>
+                      </tr>
+                      {%endfor%}
+                      {%else%}
+                      <tr>
+                        <td>
+                            No record to display
+                        </td>
+                      </tr>
+                      {%endif%}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+{%endblock content%}

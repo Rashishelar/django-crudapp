@@ -1,0 +1,64 @@
+{%extends 'dashboard/base.html'%}
+{%block content%}
+    <div class="container">
+        <br>
+        <div class="row ">
+            <div class="col-12">
+                {%if messages%}
+                <h4>Error Message</h4>
+                {%for message in messages%}
+                {{message}}
+                {%endfor%}
+                {%endif%}
+            </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div class="col-6">
+                <h5>Payments</h5>
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    {{forms.as_p}}
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </form>
+            </div>
+            <div class="col-6">
+                <br>
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Seach the data ....." style="width: 100%;">
+                <br>
+                <table class="table" id="myTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Payments Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%if display_payments%}
+                        {%for display_payment in display_payments%}
+                        <tr>
+                            <td>
+                                <p>
+                                    <h6>Payment ID:     {{display_payment.paymentID}}</h6>
+                                    Customer Number:     {{display_payment.customerNumber}}<br>
+                                    Order Number:     {{display_payment.orderNumber}}<br>
+                                    Payment Date:     {{display_payment.paymentDate}}<br>
+                                    Total Amount:     {{display_payment.totalAmount}}<br>
+                                    <a href="{%url 'update_payments' display_payment.paymentID%}" class="btn btn-secondary">Update</a>
+                                    <a href="{%url 'delete_payments' display_payment.paymentID%}" class="btn btn-danger">Delete</a>
+                                </p>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                        {%else%}
+                        <tr>
+                            <td>
+                                No Record to display
+                            </td>
+                        </tr>
+                        {%endif%}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+{%endblock content%}

@@ -1,0 +1,75 @@
+{%extends 'dashboard/base.html'%}
+{%block content%}
+    <div class="container">
+        <br>
+        <div class="row ">
+          <div class="col-12">
+             {%if messages%}
+                <h4>Error Message</h4>
+                    {%for message in messages%}
+                    {{message}}
+                {%endfor%}
+             {%endif%}
+          </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div class="col-6">
+                <h5>Customers</h5>
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    {{forms.as_p}}
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </form>
+            </div>
+            <div class="col-6">
+                <br>
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Seach the data ....." style="width: 100%;">
+                <br>
+                <table class="table" id="myTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Customers Details</th>
+                        <th scope="col">Sales Rep</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%if display_customers%}
+                        {%for display_customer in display_customers%}
+                        <tr>
+                            <td>
+                                <p>
+                                    <h6>Customer Number:     {{display_customer.customerNumber}}</h6>
+                                    {{display_customer.customerName}} <br>
+                                    {{display_customer.phone}} <br>
+                                    {{display_customer.addressLine1}} <br>
+                                    {{display_customer.addressLine2}} <br>
+                                    {{display_customer.city}},{{display_customer.state}},{{display_customer.country}},{{display_customer.postalCode}} <br>
+                                    <h6>Credit Limit:     {{display_customer.creditLimit}}</h6>
+                                    <h6>Contact:     {{display_customer.contactFirstName}} {{display_customer.contactLastName}} </h6>
+                                    <a href="{%url 'update_customers' display_customer.customerNumber%}" class="btn btn-secondary">Update</a>
+                                    <a href="{%url 'delete_customers' display_customer.customerNumber%}" class="btn btn-danger">Delete</a>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <h6>Sales Rep:     {{display_customer.salesRepEmployeeNumber.firstName}} {{display_customer.salesRepEmployeeNumber.lastName}} <br>{{display_customer.salesRepEmployeeNumber}}</h6>
+                                    
+                                </p>
+                                
+                            </td>
+                        </tr>
+                        {%endfor%}
+                        {%else%}
+                            <tr>
+                                <td>
+                                    No Record to display
+                                </td>
+                            </tr>
+                        {%endif%}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+{%endblock content%}

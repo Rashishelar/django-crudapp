@@ -1,0 +1,65 @@
+{%extends 'dashboard/base.html'%}
+{%block content%}
+    <div class="container">
+        <br>
+        <div class="row ">
+          <div class="col-12">
+             {%if messages%}
+                <h4>Error Message</h4>
+                    {%for message in messages%}
+                    {{message}}
+                {%endfor%}
+             {%endif%}
+          </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div class="col-6">
+                <h5>Offices</h5>
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    {{forms.as_p}}
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </form>
+            </div>
+            <div class="col-6">
+                <br>
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Seach the data ....." style="width: 100%;">
+                <br>
+                <table class="table" id="myTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Offices Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%if display_offices%}
+                        {%for display_office in display_offices%}
+                        <tr>
+                            <td>
+                                <p>
+                                    <h6>Office Code:     {{display_office.officeCode}}</h6>
+                                    {{display_office.phone}}<br>
+                                    {{display_office.addressLine1}}<br>
+                                    {{display_office.addressLine2}}<br>
+                                    {{display_office.city}},{{display_office.state}},{{display_office.country}},{{display_office.postalCode}}<br>
+                                    {{display_office.territory}}<br>
+                                    <a href="{%url 'update_offices' display_office.officeCode%}" class="btn btn-secondary">Update</a>
+                                    <a href="{%url 'delete_offices' display_office.officeCode%}" class="btn btn-danger">Delete</a>
+                                </p>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                        {%else%}
+                        <tr>
+                            <td>
+                                No record to display
+                            </td>
+                        </tr>
+                        {%endif%}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+{%endblock content%}

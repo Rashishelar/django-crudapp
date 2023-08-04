@@ -1,0 +1,64 @@
+{%extends 'dashboard/base.html'%}
+{%block content%}
+    <div class="container">
+      <br>
+      <div class="row ">
+        <div class="col-12">
+           {%if messages%}
+              <h4>Error Message</h4>
+                  {%for message in messages%}
+                  {{message}}
+              {%endfor%}
+           {%endif%}
+        </div>
+      </div>
+      <br>
+        <div class="row ">
+            <div class="col-6">
+                <h5>Products</h5>
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    {{forms.as_p}}
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </form>
+            </div>
+            <div class="col-6">
+              <br>
+              <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Seach the data ....." style="width: 100%;">
+              <br>
+                <table class="table" id="myTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Product Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%if display_products%}
+                        {%for display_product in display_products%}
+                      <tr>
+                        <td>
+                            <p>
+                                <h6>Product:</h6>{{display_product.productName}}  :  {{display_product.productCode}} <br> 
+                                Quantity In Stock:     {{display_product.quantityInStock}}<br>
+                                Buy Price:     {{display_product.buyPrice}}<br>
+                                <a href="{%url 'update_products' display_product.productCode%}" class="btn btn-secondary">Update</a>
+                                <a href="{%url 'delete_products' display_product.productCode%}" class="btn btn-danger">Delete</a>
+                            </p>
+                        </td>
+                      </tr>
+                      {%endfor%}
+                      {%else%}
+                      <tr>
+                        <td>
+                            <p>
+                                No record to display
+                            </p>
+                        </td>
+                      </tr>
+                      {%endif%}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+{%endblock content%}

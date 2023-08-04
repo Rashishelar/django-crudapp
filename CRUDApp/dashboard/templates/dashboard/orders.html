@@ -1,0 +1,78 @@
+{%extends 'dashboard/base.html'%}
+{%block content%}
+<div class="container">
+    <br>
+    <div class="row ">
+        <div class="col-12">
+            {%if messages%}
+            <h4>Error Message</h4>
+            {%for message in messages%}
+            {{message}}
+            {%endfor%}
+            {%endif%}
+        </div>
+    </div>
+    <br>
+    <div class="row ">
+        <div class="col-12">
+
+        </div>
+    </div>
+    <br>
+    <div class="row ">
+        <div class="col-6">
+            <h5>Orders</h5>
+            <form action="" method="POST">
+                {%csrf_token%}
+                {{forms.as_p}}
+                <input type="submit" value="Save" class="btn btn-primary">
+            </form>
+        </div>
+        <div class="col-6">
+            <br>
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Seach the data ....." style="width: 100%;">
+            <br>
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Order Details</th>
+                        <th scope="col">Customers Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%if display_orders%}
+                    {%for display_order in display_orders%}
+                    <tr>
+                        <td>
+                            <p>
+                            <h6>Order Number: {{display_order.orderNumber}}</h6>
+                            Order Date: {{display_order.orderDate}}<br>
+                            Required Date: {{display_order.requiredDate}}<br>
+                            Shipped Date: {{display_order.shippedDate}}<br>
+                            Status: {{display_order.status}}<br>
+                            <a href="{%url 'update_orders' display_order.orderNumber%}" class="btn btn-secondary">Update</a>
+                            <a href="{%url 'delete_orders' display_order.orderNumber%}" class="btn btn-danger">Delete</a>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                            <h6>Customer Number:</h6>{{display_order.customerNumber}}
+                            </p>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td>
+                            <p>
+                                No record to display
+                            </p>
+                        </td>
+                    </tr>
+                    {%endif%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{%endblock content%}
