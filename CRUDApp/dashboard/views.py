@@ -22,7 +22,7 @@ from dashboard.models.payments import Payments
 from dashboard.models.admin import Admin
 
 # import password hasher
-from argon2 import PasswordHasher
+#from argon2 import PasswordHasher
 
 # import here message
 from django.contrib import messages
@@ -282,13 +282,13 @@ def delete_payments(request,id):
     
 def changepassword(request):
     if request.method=='POST':
-        ph=PasswordHasher()
+        #ph=PasswordHasher()
         old_username=request.POST['old_username']
         old_password=request.POST['old_password']
         new_password=request.POST['new_password']
         user=Admin.objects.get(username=old_username)
-        if user.username==old_username and ph.verify(user.password,old_password):
-            password=ph.hash(new_password)
+        if user.username==old_username and user.password==old_password:
+            password=new_password
             user.password=password
             user.save()
             return HttpResponseRedirect('/dashboard/changepassword')
@@ -300,13 +300,3 @@ def changepassword(request):
     
 def logout(request):
     return HttpResponseRedirect('/')
-'''
-def savepassword(request):
-    ph=PasswordHasher()
-    password=ph.hash('raju@123')
-    #save the password
-    username='raju'
-    save_admin=Admin(username=username,password=password)
-    save_admin.save()
-    return HttpResponseRedirect('/')
-'''
