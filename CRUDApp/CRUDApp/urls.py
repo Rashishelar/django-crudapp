@@ -17,10 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from dashboardadmin.views import index
+from dashboardadmin.views import savepassword
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls')),
     path('', index,name='index'),
+    path('dashboardadmin/savepassword', savepassword,name='savepassword'),
     
 ]
